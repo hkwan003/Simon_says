@@ -1,0 +1,20 @@
+120B Final Project
+
+LEVEL 2
+1. light 1 : 0x01
+2. light 3 : 0x04
+3. light 4 : 0x08
+4. light 1 : 0x01
+5. light 2 : 0x02
+6. light 1 : 0x01
+
+LEVEL 3
+1. light 1 : 0x02
+2. light 2 : 0x04
+3. light 3 : 0x01
+4. light 4 : 0x08
+5. light 5 : 0x02
+6. light 6 : 0x04
+7. light 7 : 0x01
+8. light 8 : 0x02
+9. light 9 : 0x08
