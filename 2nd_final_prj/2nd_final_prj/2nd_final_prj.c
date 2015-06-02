@@ -20,6 +20,8 @@ unsigned long _avr_timer_cntcurr = 0;
 unsigned char var = 0;
 unsigned char var2 = 0;
 unsigned char x;
+unsigned char global_g = 0;
+unsigned char time;
 
 
 void TimerOn() 
@@ -62,13 +64,16 @@ void TickFct_State_machine_1()
 	{
 
 		case SM1_off:
-		if(~PINB & 0x10)
+		if(global_g == 0)
 		{
-			SM1_State = SM1_on1;	
-		}
-		else
-		{
-			SM1_State = SM1_off;
+			if(~PINB & 0x10)
+			{
+				SM1_State = SM1_on1;
+			}
+			else
+			{
+				SM1_State = SM1_off;
+			}
 		}
 		break;
 		case SM1_on1:
@@ -82,8 +87,7 @@ void TickFct_State_machine_1()
 		break;
 		case SM1_on4:
 		SM1_State = SM1_off;
-		default:
-		SM1_State = SM1_off;
+		global_g = 1;
 	}
 
 	switch(SM1_State) 
@@ -115,14 +119,17 @@ void ButtonPress()
 	switch(Press_States)
 	{
 		case Init:
-		if(~PINB & 0x01)
+		if(global_g == 1)
 		{
-			while(~PINB & 0x01){}
-			Press_States = Press1;
-		} 
-		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
-		{
-			Press_States = Error;
+			if(~PINB & 0x01)
+			{
+				while(~PINB & 0x01){}
+				Press_States = Press1;	
+			}
+			if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+			{
+				Press_States = Error;
+			}
 		}
 		break;
 		
@@ -165,8 +172,12 @@ void ButtonPress()
 			Press_States = Off;	
 		}
 		break;
-		default:
-		Press_States = Init;
+		case Error:
+		if(~PINB & 0x01)
+		{
+			Press_States = Press1;
+		}
+		break;
 	}
 	switch(Press_States)
 	{
@@ -176,43 +187,46 @@ void ButtonPress()
 		
 		case Press1:
 		PORTA = 0x01;
-		var++;	
 		break;
 		
 		case Press2:
 		PORTA = 0x02;
-		var++;	
 		break;
 		
 		case Press3:
 		PORTA = 0x04;
-		var++;	
 		break;
 		
 		case Press4:
 		PORTA = 0x08;
-		var++;	
 		break;
 		case Off:
 		PORTA = 0x00;
+		global_g = 2;
 		default:
 		break;
 		
 	}
 }
 
-enum SM2_States {SM2_off, SM2_on1, SM2_on2, SM2_on3, SM2_on4, SM2_on5, SM2_on6} SM2_States;
+enum SM2_State {SM2_off, SM2_on1, SM2_on2, SM2_on3, SM2_on4, SM2_on5, SM2_on6} SM2_States;
 void TickFct_Machine2()
 {
 	switch(SM2_States)
 	{
 		case SM2_off:
-		if(~PINB & 0x10)
+		if(global_g == 2)
 		{
-			SM2_States = SM2_on1;
+			if(~PINB & 0x01)
+			{
+				SM2_States = SM2_on1;
+			}
+			while(!(~PINB & 0x01))
+			{
+				SM2_States = SM2_off;
+			}	
 		}
-		else
-		{
+		else{
 			SM2_States = SM2_off;
 		}
 		break;
@@ -232,10 +246,9 @@ void TickFct_Machine2()
 		SM2_States = SM2_on6;
 		break;
 		case SM2_on6:
+		global_g = 3;
 		SM2_States = SM2_off;
 		break;
-		default:
-		SM2_States = SM2_off;
 	}
 
 	switch(SM2_States)
@@ -263,7 +276,7 @@ void TickFct_Machine2()
 		break;
 	}
 }
-/*
+
 enum Press_sec_level{Init2, Press_state1, Press_state2, Press_state3, Press_state4, Press_state5, Press_state6, Error2, Off2} Press_sec_level;
 void ButtonPress2()
 {
@@ -280,7 +293,6 @@ void ButtonPress2()
 			Press_sec_level = Error2;
 		}
 		break;
-
 		case Press_state1:
 		if(~PINB & 0x04)
 		{
@@ -388,81 +400,104 @@ void ButtonPress2()
 
 		case Off2:
 		PORTA = 0x00;
-
+		global_g = 4;
 		default:
 		break;
 
 	}
 }
-*/
+
+enum SM3_States {SM3_off, SM3_on1, SM3_on2, SM3_on3, SM3_on4, SM3_on5, SM3_on6, SM3_on7, SM3_on8, SM3_on9} SM3_State;
+void TickFct_Machine3()
+{
+	switch(SM3_States)
+	{
+		case SM3_off:
+		if(global_g == 4)
+		{
+			if(~PINB & 0x01)
+			{
+				while(~PINB & 0x01){}
+				SM3_State = SM3_on1;
+			}
+			else
+			{
+				SM3_State = SM3_off;
+			}	
+		}
+		break;
+		case SM3_on1:
+		SM3_State = SM3_on2;
+		break;
+		case SM3_on2:
+		SM3_State = SM3_on3;
+		break;
+		case SM3_on3:
+		SM3_State = SM3_on4;
+		break;
+		case SM3_on4:
+		SM3_State = SM3_on5;
+		break;
+		case SM3_on5:
+		SM3_State = SM3_on6;
+		break;
+		case SM3_on6:
+		SM3_State = SM3_on7;
+		break;
+		case SM3_on7:
+		SM3_State = SM3_on8;
+		break;
+		case SM3_on8:
+		SM3_State = SM3_on9;
+		break;
+		case SM3_on9:
+		SM3_State = SM3_off;
+		default:
+		SM3_State = SM3_off;
+
+	}
+}
+
 int main(void)
 {
 	DDRA = 0xff;	PORTA = 0x00;
 	DDRB = 0x00;	PORTB = 0xFF;
 	
-	TimerSet(200);
-	TimerOn();
-	static task task1;		//display(level 1)
-	static task task2;		//press(level1)
-	/*
-	static task task3;		//display(level 2)
-	static task task4;		//press(level 2)
-	*/
-	task *tasks[] = { &task1, &task2};
-	const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
-	// Task 1
-	task1.state = SM1_off;//Task initial state.
-	task1.period = 3;//Task Period.
-	task1.elapsedTime = 3;//Task current elapsed time.
-	task1.TickFct = &TickFct_State_machine_1;//Function pointer for the tick.
-	// Task 2
-	task2.state = Off;//Task initial state.
-	task2.period = 2;//Task Period.
-	task2.elapsedTime = 2;//Task current elapsed time.
-	task2.TickFct = &ButtonPress;//Function pointer for the tick.
-	// Task 3
-	/*
-	task3.state = SM2_off;//task initial state
-	task3.period = 3;//task period.
-	task3.elapsedTime = 3;
-	task3.TickFct = & TickFct_Machine2;
-	// Task 4
-	task4.state = Init2;
-	task4.period = 1;
-	task4.elapsedTime = 1;
-	task4.TickFct = & ButtonPress2;
-	*/
-	
-	unsigned short i; // Scheduler for-loop iterator
-	while(1)
+	if(global_g == 0)
 	{
-		// Scheduler code
-		for ( i = 0; i < numTasks; i++ ) 
+		while(global_g == 0)
 		{
-			// Task is ready to tick
-			if ( tasks[i]->elapsedTime == tasks[i]->period ) 
-			{
-				// Setting next state for task
-				if(i == 0)
-				{
-					if(var < 5)
-					{
-						tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-						// Reset the elapsed time for next tick.
-						tasks[i]->elapsedTime = 0;
-					}
-				}
-				else
-				{
-					tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-					// Reset the elapsed time for next tick.
-					tasks[i]->elapsedTime = 0;
-				}
-			}
-			tasks[i]->elapsedTime += 1;
+			TimerSet(700);
+			TimerOn();
+			TickFct_State_machine_1();
+			while(!TimerFlag);
+			TimerFlag = 0;	
 		}
-		while(!TimerFlag);
-		TimerFlag = 0;
+		while(global_g == 1)
+		{
+			TimerSet(200);
+			TimerOn();
+			ButtonPress();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 2)
+		{
+			TimerSet(1000);
+			TimerOn();
+			TickFct_Machine2();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 3)
+		{
+			TimerSet(200);
+			TimerOn();
+			ButtonPress2();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
 	}
+	return 0;
 		
 }
