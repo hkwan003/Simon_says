@@ -2,7 +2,7 @@
 
 LEVEL 2
 1. light 1 : 0x01
-2. light 3 : 0x04
+2. light 3 : 0x02
 3. light 4 : 0x08
 4. light 1 : 0x01
 5. light 2 : 0x02

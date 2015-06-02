@@ -175,6 +175,7 @@ void ButtonPress()
 		case Error:
 		if(~PINB & 0x01)
 		{
+			while(~PINB & 0x01){}
 			Press_States = Press1;
 		}
 		break;
@@ -370,32 +371,26 @@ void ButtonPress2()
 
 		case Press_state1:
 		PORTA = 0x01;
-		var2++;
 		break;
 
 		case Press_state2:
 		PORTA = 0x04;
-		var2++;
 		break;
 
 		case Press_state3:
 		PORTA = 0x08;
-		var2++;
 		break;
 
 		case Press_state4:
 		PORTA = 0x01;
-		var2++;
 		break;
 
 		case Press_state5:
 		PORTA = 0x02;
-		var2++;
 		break;
 
 		case Press_state6:
 		PORTA = 0x01;
-		var2++;
 		break;
 
 		case Off2:
@@ -410,11 +405,12 @@ void ButtonPress2()
 enum SM3_States {SM3_off, SM3_on1, SM3_on2, SM3_on3, SM3_on4, SM3_on5, SM3_on6, SM3_on7, SM3_on8, SM3_on9} SM3_State;
 void TickFct_Machine3()
 {
-	switch(SM3_States)
+	switch(SM3_State)
 	{
 		case SM3_off:
 		if(global_g == 4)
 		{
+			PORTA = 0x04;
 			if(~PINB & 0x01)
 			{
 				while(~PINB & 0x01){}
@@ -454,7 +450,36 @@ void TickFct_Machine3()
 		SM3_State = SM3_off;
 		default:
 		SM3_State = SM3_off;
-
+	}
+	switch(SM3_State)
+	{
+		case SM3_on1:
+		PORTA = 0x02;
+		break;
+		case SM3_on2:
+		PORTA = 0x04;
+		break;
+		case SM3_on3:
+		PORTA = 0x01;
+		break;
+		case SM3_on4:
+		PORTA = 0x08;
+		break;
+		case SM3_on5:
+		PORTA = 0x02;
+		break;
+		case SM3_on6:
+		PORTA = 0x04;
+		break;
+		case SM3_on7:
+		PORTA = 0x01;
+		break;
+		case SM3_on8:
+		PORTA = 0x02;
+		break;
+		case SM3_on9:
+		PORTA = 0x08;
+		break;
 	}
 }
 
@@ -491,9 +516,18 @@ int main(void)
 		}
 		while(global_g == 3)
 		{
-			TimerSet(200);
+			TimerSet(400);
 			TimerOn();
 			ButtonPress2();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 4)
+		{
+			PORTA = 0x08;
+			TimerSet(1000);
+			TimerOn();
+			TickFct_Machine3();
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
