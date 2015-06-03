@@ -357,6 +357,7 @@ void ButtonPress2()
 		case Press_state6:
 		if(~PINB & 0x10)
 		{
+			global_g = 4;
 			Press_sec_level = Off2;
 		}
 		break;
@@ -394,9 +395,7 @@ void ButtonPress2()
 		break;
 
 		case Off2:
-		PORTA = 0x00;
-		global_g = 4;
-		default:
+		PORTA = 0x01;
 		break;
 
 	}
@@ -454,6 +453,7 @@ void TickFct_Machine3()
 	switch(SM3_State)
 	{
 		case SM3_off:
+		global_g = 5;
 		PORTA = 0x00;
 		break;
 		case SM3_on1:
@@ -492,14 +492,17 @@ void ButtonPress3()
 	switch(Press_third_level)
 	{
 		case Init3:
-		if(~PINB & 0x02)
+		if(global_g == 5)
 		{
-			while(~PINB & 0x02){}
-			Press_third_level = Press3_state1;
-		}
-		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
-		{
-			Press_third_level = Error3;
+			if(~PINB & 0x02)
+			{
+				while(~PINB & 0x02){}
+				Press_third_level = Press3_state1;
+			}
+			if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+			{
+				Press_third_level = Error3;
+			}	
 		}
 		break;
 		case Press3_state1:
@@ -571,18 +574,70 @@ void ButtonPress3()
 		}
 		break;
 		case Press3_state7:
-		if(~PINB & 0x04)
+		if(~PINB & 0x02)
 		{
-			
-			while(~PINB & 0x04){}
-			Press_third_level = Press3_state6;
+			while(~PINB & 0x02){}
+			Press_third_level = Press3_state8;
 		}
-		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
 			Press_third_level = Error3;
 		}
 		break;
-		
+		case Press3_state8:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_third_level = Press3_state9;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state9:
+		if(~PINB & 0x10)
+		{
+			Press_third_level = Off3;
+		}
+		break;
+	}
+	switch(Press_third_level)
+	{
+		case Error3:
+		PORTA = 0x10;
+		break;
+		case Press3_state1:
+		PORTA = 0x02;
+		break;
+		case Press3_state2:
+		PORTA = 0x04;
+		break;
+		case Press3_state3:
+		PORTA = 0x01;
+		break;
+		case Press3_state4:
+		PORTA = 0x08;
+		break;
+		case Press3_state5:
+		PORTA = 0x02;
+		break;
+		case Press3_state6:
+		PORTA = 0x04;
+		break;
+		case Press3_state7:
+		PORTA = 0x01;
+		break;
+		case Press3_state8:
+		PORTA = 0x02;
+		break;
+		case Press3_state9:
+		PORTA = 0x08;
+		break;
+		case Off3:
+		PORTA = 0x00;
+		global_g = 6;
+		break;
 	}
 }
 
@@ -593,10 +648,11 @@ int main(void)
 	DDRA = 0xff;	PORTA = 0x00;
 	DDRB = 0x00;	PORTB = 0xFF;
 	
-	if(global_g == 0)
+	if(global_g == 4)
 	{
-		while(global_g == 0)
+		/*while(global_g == 0)
 		{
+			
 			TimerSet(700);
 			TimerOn();
 			TickFct_State_machine_1();
@@ -627,15 +683,26 @@ int main(void)
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
+		*/
 		while(global_g == 4)
 		{
-			PORTA = 0x08;
+			PORTA = 0x04;
 			TimerSet(1000);
 			TimerOn();
 			TickFct_Machine3();
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
+		/*
+		while(global_g == 5)
+		{
+			TimerSet(400);
+			TimerOn();
+			ButtonPress3();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		*/
 	}
 	return 0;
 		
