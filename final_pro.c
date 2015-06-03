@@ -745,10 +745,211 @@ void TickFct_Machine4()
 		PORTA = 0x01;
 		global_g = 7;
 		break;
-		
 	}
-	
 }
+
+enum Press_fourth_level{Init4, Press4_state1, Press4_state2, Press4_state3, Press4_state4, Press4_state5, Press4_state6, Press4_state7, Press4_state8, Press4_state9, Press4_state10, Press4_state11, Press4_state12, Error4, Off4} Press_fourth_level;
+void ButtonPress4()
+{
+	switch(Press_fourth_level)
+	{
+		case Init4:
+		if(global_g == 7)
+		{
+			PORTA = 0x00;
+			if(~PINB & 0x01)
+			{
+				while(~PINB & 0x01){}
+				Press_fourth_level = Press4_state1; 
+			}
+			if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+			{
+				Press_fourth_level = Error4;
+			}
+		}
+		break;
+		case Press4_state1:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_fourth_level = Press4_state2;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state2:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fourth_level = Press4_state3;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state3:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fourth_level = Press4_state4;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state4:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fourth_level = Press4_state5;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state5:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_fourth_level = Press4_state6;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state6:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fourth_level = Press4_state7;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state7:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fourth_level = Press4_state8;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state8:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_fourth_level = Press4_state9;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state9:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fourth_level = Press4_state10;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state10:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fourth_level = Press4_state11;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		
+		case Press4_state11:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fourth_level = Press4_state12;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fourth_level = Error4;
+		}
+		break;
+		case Press4_state12:
+		if(~PINB & 0x10)
+		{
+			Press_fourth_level = Off4;
+		}
+		break;
+		case Error4:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fourth_level = Press4_state1;
+		}
+	}
+	switch(Press_fourth_level)
+	{
+		case Error4:
+		PORTA = 0x10;
+		break;
+		case Press4_state1:
+		PORTA = 0x01;
+		break;
+		case Press4_state2:
+		PORTA = 0x08;
+		break;
+		case Press4_state3:
+		PORTA = 0x02;
+		break;
+		case Press4_state4:
+		PORTA = 0x01;
+		break;
+		case Press4_state5:
+		PORTA = 0x02;
+		break;
+		case Press4_state6:
+		PORTA = 0x08;
+		break;
+		case Press4_state7:
+		PORTA = 0x02;
+		break;
+		case Press4_state8:
+		PORTA = 0x01;
+		break;
+		case Press4_state9:
+		PORTA = 0x08;
+		break;
+		case Press4_state10:
+		PORTA = 0x01;
+		break;
+		case Press4_state11:
+		PORTA = 0x02;
+		break;
+		case Press4_state12:
+		PORTA = 0x01;
+		break;
+		case Off4:
+		PORTA = 0x00;
+		global_g = 7;
+		break;
+	}
+}	
 
 int main(void)
 {
@@ -810,6 +1011,14 @@ int main(void)
 			TimerSet(1000);
 			TimerOn();
 			TickFct_Machine4();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 7)
+		{
+			TimerSet(400);
+			TimerOn();
+			ButtonPress4();
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
