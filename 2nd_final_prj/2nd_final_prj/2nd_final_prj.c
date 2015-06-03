@@ -302,7 +302,7 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
-			Press_sec_level = Error;
+			Press_sec_level = Error2;
 		}
 		break;
 
@@ -946,10 +946,81 @@ void ButtonPress4()
 		break;
 		case Off4:
 		PORTA = 0x00;
-		global_g = 7;
+		global_g = 8;
 		break;
 	}
 }	
+
+enum SM5_States{SM5_off, SM5_on1, SM5_on2, SM5_on3, SM5_on4, SM5_on5, SM5_on6, SM5_on7, SM5_on8, SM5_on9, SM5_on10, SM5_on11, SM5_on12, SM5_on13, SM5_on14, SM5_on15} SM5_States;
+void TickFct_Machine5()
+{
+	switch(SM5_States)
+	{
+		case SM5_off:
+		if(global_g == 8)
+		{
+			if(~PINB & 0x01)
+			{
+				while(~PINB & 0x01){}
+				SM5_States = SM5_on1;
+			}
+			else
+			{
+				SM5_States = SM5_off;
+			}
+		}
+		break;
+		case SM5_on1:
+		SM5_States = SM5_on2;
+		break;
+		case SM5_on2:
+		SM5_States = SM5_on3;
+		break;
+		case SM5_on3:
+		SM5_States = SM5_on4;
+		break;
+		case SM5_on4:
+		SM5_States = SM5_on5;
+		break;
+		case SM5_on5:
+		SM5_States = SM5_on6;
+		break;
+		case SM5_on6:
+		SM5_States = SM5_on7;
+		break;
+		case SM5_on7:
+		SM5_States = SM5_on8;
+		break;
+		case SM5_on8:
+		SM5_States = SM5_on9;
+		break;
+		case SM5_on9:
+		SM5_States = SM5_on10;
+		break;
+		case SM5_on10:
+		SM5_States = SM5_on11;
+		break;
+		case SM5_on11:
+		SM5_States = SM5_on12;
+		break;
+		case SM5_on12:
+		SM5_States = SM5_on13;
+		break;
+		case SM5_on13:
+		SM5_States = SM5_on14;
+		break;
+		case SM5_on14:
+		SM5_States = SM5_on15;
+		break;
+		case SM5_on15:
+		SM5_States = SM5_off;
+		break;
+	}
+	switch(SM5_States)
+	{
+		
+	}
+}
 
 int main(void)
 {
@@ -1021,6 +1092,11 @@ int main(void)
 			ButtonPress4();
 			while(!TimerFlag);
 			TimerFlag = 0;
+		}
+		while(global_g == 8)
+		{
+			TimerSet(800);
+			TimerOn();
 		}
 	}
 	return 0;

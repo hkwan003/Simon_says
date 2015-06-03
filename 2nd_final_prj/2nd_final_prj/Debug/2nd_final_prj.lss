@@ -884,10 +884,10 @@ void ButtonPress2()
  51c:	1b 99       	sbic	0x03, 3	; 3
  51e:	51 c0       	rjmp	.+162    	; 0x5c2 <ButtonPress2+0xf4>
 		{
-			Press_sec_level = Error;
- 520:	85 e0       	ldi	r24, 0x05	; 5
+			Press_sec_level = Error2;
+ 520:	87 e0       	ldi	r24, 0x07	; 7
  522:	80 93 0a 01 	sts	0x010A, r24
- 526:	67 c0       	rjmp	.+206    	; 0x5f6 <ButtonPress2+0x128>
+ 526:	58 c0       	rjmp	.+176    	; 0x5d8 <ButtonPress2+0x10a>
 		}
 		break;
 
