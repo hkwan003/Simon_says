@@ -957,6 +957,7 @@ void TickFct_Machine5()
 	switch(SM5_States)
 	{
 		case SM5_off:
+		
 		if(global_g == 8)
 		{
 			if(~PINB & 0x01)
@@ -1018,7 +1019,55 @@ void TickFct_Machine5()
 	}
 	switch(SM5_States)
 	{
-		
+		case SM5_off:
+		PORTA = 0x00;
+		break;
+		case SM5_on1:
+		PORTA = 0x08;
+		break;
+		case SM5_on2:
+		PORTA = 0x04;
+		break;
+		case SM5_on3:
+		PORTA = 0x02;
+		break;
+		case SM5_on4:
+		PORTA = 0x01;
+		break;
+		case SM5_on5:
+		PORTA = 0x02;
+		break;
+		case SM5_on6:
+		PORTA = 0x01;
+		break;
+		case SM5_on7:
+		PORTA = 0x04;
+		break;
+		case SM5_on8:
+		PORTA = 0x08;
+		break;
+		case SM5_on9:
+		PORTA = 0x02;
+		break;
+		case SM5_on10:
+		PORTA = 0x01;
+		break;
+		case SM5_on11:
+		PORTA = 0x02;
+		break;
+		case SM5_on12:
+		PORTA = 0x01;
+		break;
+		case SM5_on13:
+		PORTA = 0x04;
+		break;
+		case SM5_on14:
+		PORTA = 0x08;
+		break;
+		case SM5_on15:
+		PORTA = 0x01;
+		global_g = 9;
+		break;
 	}
 }
 
@@ -1097,6 +1146,9 @@ int main(void)
 		{
 			TimerSet(800);
 			TimerOn();
+			TickFct_Machine5();
+			while(!TimerFlag);
+			TimerFlag = 0;
 		}
 	}
 	return 0;
