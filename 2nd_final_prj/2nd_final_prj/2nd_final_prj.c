@@ -357,7 +357,6 @@ void ButtonPress2()
 		case Press_state6:
 		if(~PINB & 0x10)
 		{
-			global_g = 4;
 			Press_sec_level = Off2;
 		}
 		break;
@@ -395,7 +394,9 @@ void ButtonPress2()
 		break;
 
 		case Off2:
-		PORTA = 0x01;
+		PORTA = 0x00;
+		global_g = 4;
+		default:
 		break;
 
 	}
@@ -447,13 +448,10 @@ void TickFct_Machine3()
 		break;
 		case SM3_on9:
 		SM3_State = SM3_off;
-		default:
-		SM3_State = SM3_off;
 	}
 	switch(SM3_State)
 	{
 		case SM3_off:
-		global_g = 5;
 		PORTA = 0x00;
 		break;
 		case SM3_on1:
@@ -482,6 +480,7 @@ void TickFct_Machine3()
 		break;
 		case SM3_on9:
 		PORTA = 0x08;
+		global_g = 5;
 		break;
 	}
 }
@@ -494,6 +493,7 @@ void ButtonPress3()
 		case Init3:
 		if(global_g == 5)
 		{
+			PORTA = 0x00;
 			if(~PINB & 0x02)
 			{
 				while(~PINB & 0x02){}
@@ -502,7 +502,14 @@ void ButtonPress3()
 			if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 			{
 				Press_third_level = Error3;
-			}	
+			}
+		}
+		break;
+		case Error3:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_third_level = Press3_state1;
 		}
 		break;
 		case Press3_state1:
@@ -648,11 +655,10 @@ int main(void)
 	DDRA = 0xff;	PORTA = 0x00;
 	DDRB = 0x00;	PORTB = 0xFF;
 	
-	if(global_g == 4)
+	if(global_g == 0)
 	{
-		/*while(global_g == 0)
+		while(global_g == 0)
 		{
-			
 			TimerSet(700);
 			TimerOn();
 			TickFct_State_machine_1();
@@ -683,17 +689,14 @@ int main(void)
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
-		*/
 		while(global_g == 4)
 		{
-			PORTA = 0x04;
 			TimerSet(1000);
 			TimerOn();
 			TickFct_Machine3();
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
-		/*
 		while(global_g == 5)
 		{
 			TimerSet(400);
@@ -702,7 +705,6 @@ int main(void)
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
-		*/
 	}
 	return 0;
 		
