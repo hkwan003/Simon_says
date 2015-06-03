@@ -31,3 +31,21 @@ LEVEL 4
 9. light 9 : 0x08
 10. light 10: 0x01
 11. light 11: 0x02
+12. light 12: 0x01
+
+LEVEL 5
+1. light 1 : 0x08
+2. light 2 : 0x04
+3. light 3 : 0x02
+4. light 4 : 0x01
+5. light 5 : 0x02
+6. light 6 : 0x01
+7. light 7 : 0x04
+8. light 8 : 0x08
+9. light 9 : 0x02
+10. light 10: 0x01
+11. light 11: 0x02
+12. light 12: 0x01
+13. light 13: 0x04
+14. light 14: 0x08
+15. light 15: 0x01

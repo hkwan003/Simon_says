@@ -1071,6 +1071,252 @@ void TickFct_Machine5()
 	}
 }
 
+enum Press_fifth_level{Init5, Press5_state1, Press5_state2, Press5_state3, Press5_state4, Press5_state5, Press5_state6, Press5_state7, Press5_state8, Press5_state9, Press5_state10, Press5_state11, Press5_state12, Press5_state13, Press5_state14, Press5_state15, Error5, Off5} Press_fifth_level;
+void ButtonPress5()
+{
+	switch(Press_fifth_level)
+	{
+		case Init5:
+		if(global_g == 9)
+		{
+			PORTA = 0x00;
+			if(~PINB & 0x08)
+			{
+				while(~PINB & 0x08){}
+				Press_fifth_level = Press5_state1;
+			}
+			if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+			{
+				Press_fifth_level = Error5;
+			}
+		}
+		break;
+		case Press5_state1:
+		if(~PINB & 0x04)
+		{
+			while(~PINB & 0x04){}
+			Press_fifth_level = Press5_state2;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state2:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fifth_level = Press5_state3;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state3:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fifth_level = Press5_state4;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state4:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fifth_level = Press5_state5;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state5:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fifth_level = Press5_state6;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state6:
+		if(~PINB & 0x04)
+		{
+			
+			while(~PINB & 0x04){}
+			Press_fifth_level = Press5_state7;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state7:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_fifth_level = Press5_state8;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state8:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fifth_level = Press5_state9;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state9:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fifth_level = Press5_state10;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state10:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_fifth_level = Press5_state11;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state11:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fifth_level = Press5_state12;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state12:
+		if(~PINB & 0x04)
+		{
+			while(~PINB & 0x04){}
+			Press_fifth_level = Press5_state13;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state13:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_fifth_level = Press5_state14;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state14:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_fifth_level = Press5_state15;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_fifth_level = Error5;
+		}
+		break;
+		case Press5_state15:
+		if(~PINB & 0x10)
+		{
+			Press_fifth_level = Off5;
+		}
+		break;
+		case Error5:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_fifth_level = Press5_state1;
+		}
+		break;
+	}
+	switch(Press_fifth_level)
+	{
+		case Error5:
+		PORTA = 0x10;
+		break;
+		case Press5_state1:
+		PORTA = 0x08;
+		break;
+		case Press5_state2:
+		PORTA = 0x04;
+		break;
+		case Press5_state3:
+		PORTA = 0x02;
+		break;
+		case Press5_state4:
+		PORTA = 0x01;
+		break;
+		case Press5_state5:
+		PORTA = 0x02;
+		break;
+		case Press5_state6:
+		PORTA = 0x01;
+		break;
+		case Press5_state7:
+		PORTA = 0x04;
+		break;
+		case Press5_state8:
+		PORTA = 0x08;
+		break;
+		case Press5_state9:
+		PORTA = 0x02;
+		break;
+		case Press5_state10:
+		PORTA = 0x01;
+		break;
+		case Press5_state11:
+		PORTA = 0x02;
+		break;
+		case Press5_state12:
+		PORTA = 0x01;
+		break;
+		case Press5_state13:
+		PORTA = 0x04;
+		break;
+		case Press5_state14:
+		PORTA = 0x08;
+		break;
+		case Press5_state15:
+		PORTA = 0x01;
+		break;
+		case Off5:
+		PORTA = 0x00;
+		break;
+	}
+}
+
+
 int main(void)
 {
 	DDRA = 0xff;	PORTA = 0x00;
@@ -1080,7 +1326,7 @@ int main(void)
 	{
 		while(global_g == 0)
 		{
-			TimerSet(700);
+			TimerSet(500);
 			TimerOn();
 			TickFct_State_machine_1();
 			while(!TimerFlag);
@@ -1096,7 +1342,7 @@ int main(void)
 		}
 		while(global_g == 2)
 		{
-			TimerSet(1000);
+			TimerSet(500);
 			TimerOn();
 			TickFct_Machine2();
 			while(!TimerFlag);
@@ -1104,7 +1350,7 @@ int main(void)
 		}
 		while(global_g == 3)
 		{
-			TimerSet(400);
+			TimerSet(200);
 			TimerOn();
 			ButtonPress2();
 			while(!TimerFlag);
@@ -1112,7 +1358,7 @@ int main(void)
 		}
 		while(global_g == 4)
 		{
-			TimerSet(1000);
+			TimerSet(500);
 			TimerOn();
 			TickFct_Machine3();
 			while(!TimerFlag);
@@ -1120,7 +1366,7 @@ int main(void)
 		}
 		while(global_g == 5)
 		{
-			TimerSet(400);
+			TimerSet(200);
 			TimerOn();
 			ButtonPress3();
 			while(!TimerFlag);
@@ -1128,7 +1374,7 @@ int main(void)
 		}
 		while(global_g == 6)
 		{
-			TimerSet(1000);
+			TimerSet(500);
 			TimerOn();
 			TickFct_Machine4();
 			while(!TimerFlag);
@@ -1136,7 +1382,7 @@ int main(void)
 		}
 		while(global_g == 7)
 		{
-			TimerSet(400);
+			TimerSet(200);
 			TimerOn();
 			ButtonPress4();
 			while(!TimerFlag);
@@ -1144,9 +1390,17 @@ int main(void)
 		}
 		while(global_g == 8)
 		{
-			TimerSet(800);
+			TimerSet(500);
 			TimerOn();
 			TickFct_Machine5();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 9)
+		{
+			TimerSet(200);
+			TimerOn();
+			ButtonPress5();
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
