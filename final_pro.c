@@ -410,7 +410,6 @@ void TickFct_Machine3()
 		case SM3_off:
 		if(global_g == 4)
 		{
-			PORTA = 0x04;
 			if(~PINB & 0x01)
 			{
 				while(~PINB & 0x01){}

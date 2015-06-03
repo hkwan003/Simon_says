@@ -410,7 +410,6 @@ void TickFct_Machine3()
 		case SM3_off:
 		if(global_g == 4)
 		{
-			PORTA = 0x04;
 			if(~PINB & 0x01)
 			{
 				while(~PINB & 0x01){}
@@ -648,7 +647,98 @@ void ButtonPress3()
 	}
 }
 
-
+enum SM4_States {SM4_off, SM4_on1, SM4_on2, SM4_on3, SM4_on4, SM4_on5, SM4_on6, SM4_on7, SM4_on8, SM4_on9, SM4_on10, SM4_on11, SM4_on12} SM4_States;
+void TickFct_Machine4()
+{
+	switch(SM4_States)
+	{
+		case SM4_off:
+		if(global_g == 6)
+		{
+			if(~PINB & 0x01)
+			{
+				while(~PINB & 0x01){}
+				SM4_States = SM4_on1;
+			}
+			else
+			{	
+				SM4_States = SM4_off;
+			}
+		}
+		break;
+		case SM4_on1:
+		SM4_States = SM4_on2;
+		break;
+		case SM4_on2:
+		SM4_States = SM4_on3;
+		break;
+		case SM4_on3:
+		SM4_States = SM4_on4;
+		break;
+		case SM4_on4:
+		SM4_States = SM4_on5;
+		break;
+		case SM4_on5:
+		SM4_States = SM4_on6;
+		break;
+		case SM4_on6:
+		SM4_States = SM4_on7;
+		break;
+		case SM4_on7:
+		SM4_States = SM4_on8;
+		break;
+		case SM4_on8:
+		SM4_States = SM4_on9;
+		break;
+		case SM4_on9:
+		SM4_States = SM4_on10;
+		break;
+		case SM4_on10:
+		SM4_States = SM4_on11;
+		break;
+		case SM4_on11:
+		SM4_States = SM4_on12;
+		break;
+		case SM4_on12:
+		SM4_States = SM4_off;
+		break;
+	}
+	switch(SM4_States)
+	{
+		case SM4_off:
+		PORTA = 0x00;
+		break;
+		case SM4_on1:
+		PORTA = 0x01;
+		break;
+		case SM4_on2:
+		PORTA = 0x08;
+		break;
+		case SM4_on3:
+		PORTA = 0x02;
+		break;
+		case SM4_on4:
+		PORTA = 0x01;
+		break;
+		case SM4_on5:
+		PORTA = 0x02;
+		break;
+		case SM4_on6:
+		PORTA = 0x08;
+		break;
+		case SM4_on7:
+		PORTA = 0x02;
+		break;
+		case SM4_on8:
+		PORTA = 0x01;
+		break;
+		case SM3_on9:
+		PORTA = 0x08;
+		break;
+		
+	}
+	
+}
 
 int main(void)
 {
