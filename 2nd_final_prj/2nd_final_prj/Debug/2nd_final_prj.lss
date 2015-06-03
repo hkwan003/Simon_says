@@ -11,21 +11,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   3 .comment      00000030  00000000  00000000  00001412  2**0
                   CONTENTS, READONLY
-  4 .debug_aranges 00000098  00000000  00000000  00001442  2**0
+  4 .debug_aranges 000000d0  00000000  00000000  00001442  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000878  00000000  00000000  000014da  2**0
+  5 .debug_info   00000b53  00000000  00000000  00001512  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000193  00000000  00000000  00001d52  2**0
+  6 .debug_abbrev 0000022f  00000000  00000000  00002065  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00001497  00000000  00000000  00001ee5  2**0
+  7 .debug_line   000015ed  00000000  00000000  00002294  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000148  00000000  00000000  0000337c  2**2
+  8 .debug_frame  000001cc  00000000  00000000  00003884  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000758  00000000  00000000  000034c4  2**0
+  9 .debug_str    000007cc  00000000  00000000  00003a50  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000183  00000000  00000000  00003c1c  2**0
+ 10 .debug_loc    00000376  00000000  00000000  0000421c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000088  00000000  00000000  00003d9f  2**0
+ 11 .debug_ranges 000000d8  00000000  00000000  00004592  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -411,7 +411,7 @@ void TimerSet(unsigned long M)
      306:	18 95       	reti
 
 00000308 <TickFct_State_machine_1>:
-
+///////////////////////////////////////////////begin code/////////////////////////////////////////////////////////////////////////////
 enum SM1_States { SM1_off, SM1_on1, SM1_on2, SM1_on3, SM1_on4} SM1_State;
 
 void TickFct_State_machine_1() 

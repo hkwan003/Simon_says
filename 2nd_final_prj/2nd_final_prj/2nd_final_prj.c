@@ -1,18 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdlib.h>
-//--------Task scheduler data structure---------------------------------------
-// Struct for Tasks represent a running process in our simple real-time operating system.
-typedef struct _task 
-{
-	/*Tasks should have members that include: state, period,
-		a measurement of elapsed time, and a function pointer.*/
-	signed char state; //Task's current state
-	unsigned long int period; //Task period
-	unsigned long int elapsedTime; //Time elapsed since last task tick
-	int (*TickFct)(int); //Task tick function
-} task;
-//--------End Task scheduler data structure-----------------------------------
+
 
 volatile unsigned char TimerFlag = 0;
 unsigned long _avr_timer_M = 1;
@@ -22,6 +11,83 @@ unsigned char var2 = 0;
 unsigned char x;
 unsigned char global_g = 0;
 unsigned char time;
+
+
+#define SET_BIT(p,i) ((p) |= (1 << (i)))
+#define CLR_BIT(p,i) ((p) &= ~(1 << (i)))
+#define GET_BIT(p,i) ((p) & (1 << (i)))
+
+/*-------------------------------------------------------------------------*/
+
+#define DATA_BUS PORTD		// port connected to pins 7-14 of LCD display
+#define CONTROL_BUS PORTA	// port connected to pins 4 and 6 of LCD disp.
+#define RS 0			// pin number of uC connected to pin 4 of LCD disp.
+#define E 1			// pin number of uC connected to pin 6 of LCD disp.
+
+/*-------------------------------------------------------------------------*/
+
+void LCD_ClearScreen(void) {
+	LCD_WriteCommand(0x01);
+}
+
+void LCD_init(void) {
+
+	//wait for 100 ms.
+	delay_ms(100);
+	LCD_WriteCommand(0x38);
+	LCD_WriteCommand(0x06);
+	LCD_WriteCommand(0x0f);
+	LCD_WriteCommand(0x01);
+	delay_ms(10);
+}
+
+void LCD_WriteCommand (unsigned char Command) {
+	CLR_BIT(CONTROL_BUS,RS);
+	DATA_BUS = Command;
+	SET_BIT(CONTROL_BUS,E);
+	asm("nop");
+	CLR_BIT(CONTROL_BUS,E);
+	delay_ms(2); // ClearScreen requires 1.52ms to execute
+}
+
+void LCD_WriteData(unsigned char Data) {
+	SET_BIT(CONTROL_BUS,RS);
+	DATA_BUS = Data;
+	SET_BIT(CONTROL_BUS,E);
+	asm("nop");
+	CLR_BIT(CONTROL_BUS,E);
+	delay_ms(1);
+}
+
+void LCD_DisplayString( unsigned char column, const unsigned char* string) {
+	LCD_ClearScreen();
+	unsigned char c = column;
+	while(*string) {
+		LCD_Cursor(c++);
+		LCD_WriteData(*string++);
+	}
+}
+
+void LCD_Cursor(unsigned char column) {
+	if ( column < 17 ) { // 16x1 LCD: column < 9
+		// 16x2 LCD: column < 17
+		LCD_WriteCommand(0x80 + column - 1);
+		} else {
+		LCD_WriteCommand(0xB8 + column - 9);	// 16x1 LCD: column - 1
+		// 16x2 LCD: column - 9
+	}
+}
+
+void delay_ms(int miliSec) //for 8 Mhz crystal
+
+{
+	int i,j;
+	for(i=0;i<miliSec;i++)
+	for(j=0;j<775;j++)
+	{
+		asm("nop");
+	}
+}
 
 
 void TimerOn() 
@@ -53,11 +119,19 @@ void TimerSet(unsigned long M)
 	_avr_timer_M = M;
 	_avr_timer_cntcurr = _avr_timer_M;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//code for the lcd display
+void LCD_init();
+void LCD_ClearScreen(void);
+void LCD_WriteCommand (unsigned char Command);
+void LCD_Cursor (unsigned char column);
+void LCD_DisplayString(unsigned char column ,const unsigned char *string);
+void delay_ms(int miliSec);
 
+///////////////////////////////////////////////begin code/////////////////////////////////////////////////////////////////////////////
 
 
 enum SM1_States { SM1_off, SM1_on1, SM1_on2, SM1_on3, SM1_on4} SM1_State;
-
 void TickFct_State_machine_1() 
 {
 	switch(SM1_State) 
@@ -206,7 +280,6 @@ void ButtonPress()
 		global_g = 2;
 		default:
 		break;
-		
 	}
 }
 
@@ -227,7 +300,8 @@ void TickFct_Machine2()
 				SM2_States = SM2_off;
 			}	
 		}
-		else{
+		else
+		{
 			SM2_States = SM2_off;
 		}
 		break;
