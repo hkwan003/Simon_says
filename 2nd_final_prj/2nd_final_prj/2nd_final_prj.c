@@ -732,8 +732,18 @@ void TickFct_Machine4()
 		case SM4_on8:
 		PORTA = 0x01;
 		break;
-		case SM3_on9:
+		case SM4_on9:
 		PORTA = 0x08;
+		break;
+		case SM4_on10:
+		PORTA = 0x01;
+		break;
+		case SM4_on11:
+		PORTA = 0x02;
+		break;
+		case SM4_on12:
+		PORTA = 0x01;
+		global_g = 7;
 		break;
 		
 	}
@@ -792,6 +802,14 @@ int main(void)
 			TimerSet(400);
 			TimerOn();
 			ButtonPress3();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 6)
+		{
+			TimerSet(1000);
+			TimerOn();
+			TickFct_Machine4();
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
