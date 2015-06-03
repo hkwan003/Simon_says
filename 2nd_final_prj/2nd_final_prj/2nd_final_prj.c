@@ -453,6 +453,9 @@ void TickFct_Machine3()
 	}
 	switch(SM3_State)
 	{
+		case SM3_off:
+		PORTA = 0x00;
+		break;
 		case SM3_on1:
 		PORTA = 0x02;
 		break;
@@ -482,6 +485,108 @@ void TickFct_Machine3()
 		break;
 	}
 }
+
+enum Press_third_level{Init3, Press3_state1, Press3_state2, Press3_state3, Press3_state4, Press3_state5, Press3_state6, Press3_state7, Press3_state8, Press3_state9, Error3, Off3} Press_third_level;
+void ButtonPress3()
+{
+	switch(Press_third_level)
+	{
+		case Init3:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_third_level = Press3_state1;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state1:
+		if(~PINB & 0x04)
+		{
+			
+			while(~PINB & 0x04){}
+			Press_third_level = Press3_state2;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state2:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_third_level = Press3_state3;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state3:
+		if(~PINB & 0x08)
+		{
+			while(~PINB & 0x08){}
+			Press_third_level = Press3_state4;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state4:
+		if(~PINB & 0x02)
+		{
+			while(~PINB & 0x02){}
+			Press_third_level = Press3_state5;
+		}
+		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state5:
+		if(~PINB & 0x04)
+		{
+			
+			while(~PINB & 0x04){}
+			Press_third_level = Press3_state6;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state6:
+		if(~PINB & 0x01)
+		{
+			while(~PINB & 0x01){}
+			Press_third_level = Press3_state7;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		case Press3_state7:
+		if(~PINB & 0x04)
+		{
+			
+			while(~PINB & 0x04){}
+			Press_third_level = Press3_state6;
+		}
+		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
+		{
+			Press_third_level = Error3;
+		}
+		break;
+		
+	}
+}
+
+
 
 int main(void)
 {
