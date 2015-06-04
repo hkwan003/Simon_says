@@ -11,6 +11,7 @@ unsigned char var2 = 0;
 unsigned char x;
 unsigned char global_g = 0;
 unsigned char time;
+char lives = 9;
 
 
 #define SET_BIT(p,i) ((p) |= (1 << (i)))
@@ -130,7 +131,71 @@ void delay_ms(int miliSec);
 
 ///////////////////////////////////////////////begin code/////////////////////////////////////////////////////////////////////////////
 
+void transmit_data(unsigned char data) 
+{
+	int i;
+	for (i = 0; i < 8 ; ++i) {
+		// Sets SRCLR to 1 allowing data to be set
+		// Also clears SRCLK in preparation of sending data
+		PORTD = (PORTD & 0xF0) | 0x08;
+		// set SER = next bit of data to be sent.
+		PORTD |= ((data >> i) & 0x01);
+		// set SRCLK = 1. Rising edge shifts next bit of data into the shift register
+		PORTD |= 0x02;
+	}
+	// set RCLK = 1. Rising edge copies data from “Shift” register to “Storage” register
+	PORTD |= 0x04;
+	// clears all lines in preparation of a new transmission
+	PORTD = PORTD & 0xF0;
+}
 
+unsigned char simon_SevenSeg(unsigned char score) 
+{
+	unsigned char controlSig = 0x00;
+	if(score == 9) 
+	{
+		controlSig = 0x19;//good
+	}
+	else if(score == 8) 
+	{
+		controlSig = 0x00;//good
+	}
+	else if(score == 7) 
+	{
+		controlSig = 0x1F;//good
+	}
+	else if(score == 6) 
+	{
+		controlSig = 0x40;//good
+	}
+	else if(score == 5) 
+	{
+		controlSig = 0x48;//good
+	}
+	else if(score == 4) 
+	{
+		controlSig = 0x98;//good
+	}
+	else if(score == 3) 
+	{
+		controlSig = 0x0C;//good
+	}
+	else if(score == 2) 
+	{
+		controlSig = 0x24;//good
+	}
+	else if(score == 1) 
+	{
+		controlSig = 0x9E;//good
+	}
+	else if(score == 0) 
+	{
+		controlSig = 0x02;//good
+	}
+	return controlSig;
+}
+
+//////////////////////////////////////////7 seg BCD////////////////////////////////////////////////////////////////////////////////////
 enum SM1_States { SM1_off, SM1_on1, SM1_on2, SM1_on3, SM1_on4} SM1_State;
 void TickFct_State_machine_1() 
 {
@@ -168,6 +233,7 @@ void TickFct_State_machine_1()
 	{
 		case SM1_off:
 		PORTA = 0X00;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 		case SM1_on1:
 		PORTA = 0x01;
@@ -202,6 +268,14 @@ void ButtonPress()
 			}
 			if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 			{
+				if(lives - 1 > -1)
+				{
+					lives--;
+				}
+				else
+				{
+					global_g = 20;
+				}
 				Press_States = Error;
 			}
 		}
@@ -215,6 +289,14 @@ void ButtonPress()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_States = Error;
 		}
 		break;
@@ -226,6 +308,14 @@ void ButtonPress()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_States = Error;
 		}
 		break;
@@ -237,6 +327,14 @@ void ButtonPress()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_States = Error;
 		}
 		break;
@@ -258,25 +356,31 @@ void ButtonPress()
 	{
 		case Error:
 		PORTA = 0x10;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 		
 		case Press1:
 		PORTA = 0x01;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 		
 		case Press2:
 		PORTA = 0x02;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 		
 		case Press3:
 		PORTA = 0x04;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 		
 		case Press4:
 		PORTA = 0x08;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 		case Off:
 		PORTA = 0x00;
+		transmit_data(simon_SevenSeg(lives));
 		global_g = 2;
 		default:
 		break;
@@ -365,6 +469,14 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_sec_level = Error2;
 		}
 		break;
@@ -376,6 +488,14 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_sec_level = Error2;
 		}
 		break;
@@ -388,6 +508,14 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_sec_level = Error2;
 		}
 		break;
@@ -400,6 +528,14 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_sec_level = Error2;
 		}
 		break;
@@ -412,6 +548,14 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_sec_level = Error2;
 		}
 		break;
@@ -424,6 +568,14 @@ void ButtonPress2()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_sec_level = Error2;
 		}
 		break;
@@ -441,34 +593,42 @@ void ButtonPress2()
 	{
 		case Error2:
 		PORTA = 0x10;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Press_state1:
 		PORTA = 0x01;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Press_state2:
 		PORTA = 0x04;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Press_state3:
 		PORTA = 0x08;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Press_state4:
 		PORTA = 0x01;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Press_state5:
 		PORTA = 0x02;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Press_state6:
 		PORTA = 0x01;
+		transmit_data(simon_SevenSeg(lives));
 		break;
 
 		case Off2:
 		PORTA = 0x00;
+		transmit_data(simon_SevenSeg(lives));
 		global_g = 4;
 		default:
 		break;
@@ -1393,8 +1553,9 @@ void ButtonPress5()
 
 int main(void)
 {
-	DDRA = 0xff;	PORTA = 0x00;
+	DDRA = 0xFF;	PORTA = 0x00;
 	DDRB = 0x00;	PORTB = 0xFF;
+	DDRD = 0xFF;	PORTD = 0x00;
 	
 	if(global_g == 0)
 	{
