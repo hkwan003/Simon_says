@@ -734,6 +734,14 @@ void ButtonPress3()
 			}
 			if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 			{
+				if(lives - 1 > -1)
+				{
+					lives--;
+				}
+				else
+				{
+					global_g = 20;
+				}
 				Press_third_level = Error3;
 			}
 		}
@@ -754,6 +762,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -765,6 +781,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -776,6 +800,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -787,6 +819,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -799,6 +839,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -810,6 +858,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -821,6 +877,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -832,6 +896,14 @@ void ButtonPress3()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_third_level = Error3;
 		}
 		break;
@@ -845,37 +917,48 @@ void ButtonPress3()
 	switch(Press_third_level)
 	{
 		case Error3:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x10;
 		break;
 		case Press3_state1:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press3_state2:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x04;
 		break;
 		case Press3_state3:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press3_state4:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press3_state5:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press3_state6:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x04;
 		break;
 		case Press3_state7:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press3_state8:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press3_state9:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Off3:
 		PORTA = 0x00;
+		transmit_data(simon_SevenSeg(lives));
 		global_g = 6;
 		break;
 	}
@@ -998,6 +1081,14 @@ void ButtonPress4()
 			}
 			if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 			{
+				if(lives - 1 > -1)
+				{
+					lives--;
+				}
+				else
+				{
+					global_g = 20;
+				}
 				Press_fourth_level = Error4;
 			}
 		}
@@ -1010,6 +1101,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1021,6 +1120,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1032,6 +1139,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1043,6 +1158,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1054,6 +1177,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1065,6 +1196,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1076,6 +1215,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1087,6 +1234,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1098,6 +1253,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1109,6 +1272,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1121,6 +1292,14 @@ void ButtonPress4()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fourth_level = Error4;
 		}
 		break;
@@ -1140,45 +1319,59 @@ void ButtonPress4()
 	switch(Press_fourth_level)
 	{
 		case Error4:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x10;
 		break;
 		case Press4_state1:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press4_state2:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press4_state3:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press4_state4:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press4_state5:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press4_state6:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press4_state7:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press4_state8:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press4_state9:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press4_state10:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press4_state11:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press4_state12:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Off4:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x00;
 		global_g = 8;
 		break;
@@ -1321,6 +1514,14 @@ void ButtonPress5()
 			}
 			if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 			{
+				if(lives - 1 > -1)
+				{
+					lives--;
+				}
+				else
+				{
+					global_g = 20;
+				}
 				Press_fifth_level = Error5;
 			}
 		}
@@ -1333,6 +1534,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1344,6 +1553,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1355,6 +1572,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1366,6 +1591,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1377,6 +1610,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1389,6 +1630,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1400,6 +1649,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1411,6 +1668,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1422,6 +1687,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1433,6 +1706,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x01 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1444,6 +1725,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1455,6 +1744,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x01 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1466,6 +1763,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x01)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1477,6 +1782,14 @@ void ButtonPress5()
 		}
 		if(~PINB & 0x02 || ~PINB & 0x04 || ~PINB & 0x08)
 		{
+			if(lives - 1 > -1)
+			{
+				lives--;
+			}
+			else
+			{
+				global_g = 20;
+			}
 			Press_fifth_level = Error5;
 		}
 		break;
@@ -1497,51 +1810,67 @@ void ButtonPress5()
 	switch(Press_fifth_level)
 	{
 		case Error5:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x10;
 		break;
 		case Press5_state1:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press5_state2:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x04;
 		break;
 		case Press5_state3:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press5_state4:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press5_state5:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press5_state6:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press5_state7:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x04;
 		break;
 		case Press5_state8:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press5_state9:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press5_state10:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press5_state11:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x02;
 		break;
 		case Press5_state12:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Press5_state13:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x04;
 		break;
 		case Press5_state14:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
 		case Press5_state15:
+		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
 		case Off5:
@@ -1593,7 +1922,7 @@ int main(void)
 		}
 		while(global_g == 4)
 		{
-			TimerSet(500);
+			TimerSet(1000);
 			TimerOn();
 			TickFct_Machine3();
 			while(!TimerFlag);

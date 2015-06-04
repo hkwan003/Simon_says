@@ -228,7 +228,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x15b0
+.text           0x00000000     0x1b48
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284.o
                 0x00000000                __vector_default
@@ -355,39 +355,39 @@ END GROUP
                 0x0000042e      0x1be 2nd_final_prj.o
                 0x0000042e                ButtonPress
  .text.TickFct_Machine2
-                0x000005ec       0xa4 2nd_final_prj.o
+                0x000005ec       0xa8 2nd_final_prj.o
                 0x000005ec                TickFct_Machine2
  .text.ButtonPress2
-                0x00000690      0x228 2nd_final_prj.o
-                0x00000690                ButtonPress2
+                0x00000694      0x22c 2nd_final_prj.o
+                0x00000694                ButtonPress2
  .text.TickFct_Machine3
-                0x000008b8       0xc6 2nd_final_prj.o
-                0x000008b8                TickFct_Machine3
+                0x000008c0       0xca 2nd_final_prj.o
+                0x000008c0                TickFct_Machine3
  .text.ButtonPress3
-                0x0000097e      0x1cc 2nd_final_prj.o
-                0x0000097e                ButtonPress3
+                0x0000098a      0x324 2nd_final_prj.o
+                0x0000098a                ButtonPress3
  .text.TickFct_Machine4
-                0x00000b4a       0xf4 2nd_final_prj.o
-                0x00000b4a                TickFct_Machine4
+                0x00000cae       0xf4 2nd_final_prj.o
+                0x00000cae                TickFct_Machine4
  .text.ButtonPress4
-                0x00000c3e      0x244 2nd_final_prj.o
-                0x00000c3e                ButtonPress4
+                0x00000da2      0x406 2nd_final_prj.o
+                0x00000da2                ButtonPress4
  .text.TickFct_Machine5
-                0x00000e82      0x11e 2nd_final_prj.o
-                0x00000e82                TickFct_Machine5
+                0x000011a8      0x11e 2nd_final_prj.o
+                0x000011a8                TickFct_Machine5
  .text.ButtonPress5
-                0x00000fa0      0x2b6 2nd_final_prj.o
-                0x00000fa0                ButtonPress5
- .text.main     0x00001256      0x34a 2nd_final_prj.o
-                0x00001256                main
- .text.libgcc   0x000015a0        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_tablejump.o)
-                0x000015a0                __tablejump2__
-                0x000015a4                __tablejump__
-                0x000015ac                . = ALIGN (0x2)
+                0x000012c6      0x51c 2nd_final_prj.o
+                0x000012c6                ButtonPress5
+ .text.main     0x000017e2      0x356 2nd_final_prj.o
+                0x000017e2                main
+ .text.libgcc   0x00001b38        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_tablejump.o)
+                0x00001b38                __tablejump2__
+                0x00001b3c                __tablejump__
+                0x00001b44                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000015ac        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
-                0x000015ac                _exit
-                0x000015ac                exit
+ .fini9         0x00001b44        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x00001b44                _exit
+                0x00001b44                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -406,11 +406,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000015ac        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .fini0         0x00001b44        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000015b0                _etext = .
+                0x00001b48                _etext = .
 
-.data           0x00800100        0x6 load address 0x000015b0
+.data           0x00800100        0x6 load address 0x00001b48
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284.o
@@ -460,8 +460,8 @@ END GROUP
                 0x00800116                time
                 0x00800117                Press_States
                 0x00800118                PROVIDE (__bss_end, .)
-                0x000015b0                __data_load_start = LOADADDR (.data)
-                0x000015b6                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001b48                __data_load_start = LOADADDR (.data)
+                0x00001b4e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800118        0x0
                 0x00800118                PROVIDE (__noinit_start, .)
@@ -535,17 +535,17 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xd00
+.debug_info     0x00000000      0xff1
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0xd00 2nd_final_prj.o
+ .debug_info    0x00000000      0xff1 2nd_final_prj.o
 
 .debug_abbrev   0x00000000      0x28a
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x28a 2nd_final_prj.o
 
-.debug_line     0x00000000     0x17e7
+.debug_line     0x00000000     0x1b65
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000     0x17e7 2nd_final_prj.o
+ .debug_line    0x00000000     0x1b65 2nd_final_prj.o
 
 .debug_frame    0x00000000      0x1ec
  *(.debug_frame)
