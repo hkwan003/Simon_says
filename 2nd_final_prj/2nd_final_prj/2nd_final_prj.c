@@ -11,8 +11,14 @@ unsigned char var2 = 0;
 unsigned char x;
 unsigned char global_g = 0;
 unsigned char time;
-char lives = 9;
+unsigned char lives = 9;
 
+void LCD_init();
+void LCD_ClearScreen(void);
+void LCD_WriteCommand (unsigned char Command);
+void LCD_Cursor (unsigned char column);
+void LCD_DisplayString(unsigned char column ,const unsigned char *string);
+void delay_ms(int miliSec);
 
 #define SET_BIT(p,i) ((p) |= (1 << (i)))
 #define CLR_BIT(p,i) ((p) &= ~(1 << (i)))
@@ -20,10 +26,10 @@ char lives = 9;
 
 /*-------------------------------------------------------------------------*/
 
-#define DATA_BUS PORTD		// port connected to pins 7-14 of LCD display
-#define CONTROL_BUS PORTA	// port connected to pins 4 and 6 of LCD disp.
-#define RS 0			// pin number of uC connected to pin 4 of LCD disp.
-#define E 1			// pin number of uC connected to pin 6 of LCD disp.
+#define DATA_BUS PORTC		// port connected to pins 7-14 of LCD display
+#define CONTROL_BUS PORTD	// port connected to pins 4 and 6 of LCD disp.
+#define RS 6			// pin number of uC connected to pin 4 of LCD disp.
+#define E 7			// pin number of uC connected to pin 6 of LCD disp.
 
 /*-------------------------------------------------------------------------*/
 
@@ -121,16 +127,8 @@ void TimerSet(unsigned long M)
 	_avr_timer_cntcurr = _avr_timer_M;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//code for the lcd display
-void LCD_init();
-void LCD_ClearScreen(void);
-void LCD_WriteCommand (unsigned char Command);
-void LCD_Cursor (unsigned char column);
-void LCD_DisplayString(unsigned char column ,const unsigned char *string);
-void delay_ms(int miliSec);
 
 ///////////////////////////////////////////////begin code/////////////////////////////////////////////////////////////////////////////
-
 void transmit_data(unsigned char data) 
 {
 	int i;
@@ -195,13 +193,37 @@ unsigned char simon_SevenSeg(unsigned char score)
 	return controlSig;
 }
 
+void Shift_Seven_Seg(unsigned short number)
+{
+	signed short digit = number, data = 0x00;
+	if (digit >= 10)
+	{
+		data = simon_SevenSeg(digit / 10);
+		digit = digit % 10;
+	}
+	else {
+		data = simon_SevenSeg(0);
+	}
+	transmit_data(data);
+	PORTD = (PORTD & 0xF8) | 0x02;
+	
+	if (digit >= 1) {
+		data = simon_SevenSeg(digit);
+	}
+	else {
+		data = simon_SevenSeg(0);
+	}
+	transmit_data(data);
+	PORTD = (PORTD & 0xF8) | 0x01;
+}
 //////////////////////////////////////////7 seg BCD////////////////////////////////////////////////////////////////////////////////////
 enum SM1_States { SM1_off, SM1_on1, SM1_on2, SM1_on3, SM1_on4} SM1_State;
 void TickFct_State_machine_1() 
 {
 	switch(SM1_State) 
 	{
-
+		//LCD_ClearScreen();
+		//LCD_DisplayString(1, "Level One");
 		case SM1_off:
 		if(global_g == 0)
 		{
@@ -232,6 +254,8 @@ void TickFct_State_machine_1()
 	switch(SM1_State) 
 	{
 		case SM1_off:
+		LCD_init();
+		LCD_DisplayString(1, "hello world");
 		PORTA = 0X00;
 		transmit_data(simon_SevenSeg(lives));
 		break;
@@ -392,6 +416,8 @@ void TickFct_Machine2()
 {
 	switch(SM2_States)
 	{
+		LCD_init();
+		LCD_DisplayString(1, "Level Two");
 		case SM2_off:
 		if(global_g == 2)
 		{
@@ -641,6 +667,8 @@ void TickFct_Machine3()
 {
 	switch(SM3_State)
 	{
+		LCD_init();
+		LCD_DisplayString(1, "Level Three");
 		case SM3_off:
 		if(global_g == 4)
 		{
@@ -969,6 +997,8 @@ void TickFct_Machine4()
 {
 	switch(SM4_States)
 	{
+		LCD_init();
+		LCD_DisplayString(1, "Level Four");
 		case SM4_off:
 		if(global_g == 6)
 		{
@@ -1383,8 +1413,9 @@ void TickFct_Machine5()
 {
 	switch(SM5_States)
 	{
+		LCD_init();
+		LCD_DisplayString(1, "Level Five");
 		case SM5_off:
-		
 		if(global_g == 8)
 		{
 			if(~PINB & 0x01)
@@ -1882,12 +1913,16 @@ void ButtonPress5()
 
 int main(void)
 {
-	DDRA = 0xFF;	PORTA = 0x00;
-	DDRB = 0x00;	PORTB = 0xFF;
-	DDRD = 0xFF;	PORTD = 0x00;
+	DDRA = 0xFF;	PORTA = 0x00;//LED outputs
+	DDRB = 0x00;	PORTB = 0xFF;//input of the buttons
+	DDRD = 0xFF;	PORTD = 0x00;//seven segment output with shift register
+	DDRC = 0xFF;	PORTC = 0x00;//data lines for LCD display
 	
 	if(global_g == 0)
 	{
+		//LCD_init();
+		//LCD_DisplayString(1, "Simon Press");
+		LCD_ClearScreen();
 		while(global_g == 0)
 		{
 			TimerSet(500);
