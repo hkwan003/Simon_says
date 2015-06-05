@@ -250,7 +250,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1c20
+.text           0x00000000     0x1e28
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284.o
                 0x00000000                __vector_default
@@ -392,45 +392,45 @@ END GROUP
                 0x000003fe       0x54 2nd_final_prj.o
                 0x000003fe                simon_SevenSeg
  .text.TickFct_State_machine_1
-                0x00000452       0xa0 2nd_final_prj.o
+                0x00000452       0xae 2nd_final_prj.o
                 0x00000452                TickFct_State_machine_1
  .text.ButtonPress
-                0x000004f2      0x1be 2nd_final_prj.o
-                0x000004f2                ButtonPress
+                0x00000500      0x1e4 2nd_final_prj.o
+                0x00000500                ButtonPress
  .text.TickFct_Machine2
-                0x000006b0       0xa8 2nd_final_prj.o
-                0x000006b0                TickFct_Machine2
+                0x000006e4       0xb8 2nd_final_prj.o
+                0x000006e4                TickFct_Machine2
  .text.ButtonPress2
-                0x00000758      0x22c 2nd_final_prj.o
-                0x00000758                ButtonPress2
+                0x0000079c      0x256 2nd_final_prj.o
+                0x0000079c                ButtonPress2
  .text.TickFct_Machine3
-                0x00000984       0xca 2nd_final_prj.o
-                0x00000984                TickFct_Machine3
+                0x000009f2       0xe0 2nd_final_prj.o
+                0x000009f2                TickFct_Machine3
  .text.ButtonPress3
-                0x00000a4e      0x324 2nd_final_prj.o
-                0x00000a4e                ButtonPress3
+                0x00000ad2      0x364 2nd_final_prj.o
+                0x00000ad2                ButtonPress3
  .text.TickFct_Machine4
-                0x00000d72       0xf4 2nd_final_prj.o
-                0x00000d72                TickFct_Machine4
+                0x00000e36      0x108 2nd_final_prj.o
+                0x00000e36                TickFct_Machine4
  .text.ButtonPress4
-                0x00000e66      0x406 2nd_final_prj.o
-                0x00000e66                ButtonPress4
+                0x00000f3e      0x458 2nd_final_prj.o
+                0x00000f3e                ButtonPress4
  .text.TickFct_Machine5
-                0x0000126c      0x11e 2nd_final_prj.o
-                0x0000126c                TickFct_Machine5
+                0x00001396      0x138 2nd_final_prj.o
+                0x00001396                TickFct_Machine5
  .text.ButtonPress5
-                0x0000138a      0x51c 2nd_final_prj.o
-                0x0000138a                ButtonPress5
- .text.main     0x000018a6      0x36a 2nd_final_prj.o
-                0x000018a6                main
- .text.libgcc   0x00001c10        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_tablejump.o)
-                0x00001c10                __tablejump2__
-                0x00001c14                __tablejump__
-                0x00001c1c                . = ALIGN (0x2)
+                0x000014ce      0x580 2nd_final_prj.o
+                0x000014ce                ButtonPress5
+ .text.main     0x00001a4e      0x3ca 2nd_final_prj.o
+                0x00001a4e                main
+ .text.libgcc   0x00001e18        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_tablejump.o)
+                0x00001e18                __tablejump2__
+                0x00001e1c                __tablejump__
+                0x00001e24                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001c1c        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
-                0x00001c1c                _exit
-                0x00001c1c                exit
+ .fini9         0x00001e24        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x00001e24                _exit
+                0x00001e24                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -449,11 +449,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001c1c        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .fini0         0x00001e24        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001c20                _etext = .
+                0x00001e28                _etext = .
 
-.data           0x00800100       0x12 load address 0x00001c20
+.data           0x00800100       0xea load address 0x00001e28
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284.o
@@ -473,49 +473,48 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800105        0xc 2nd_final_prj.o
+                0x00800105       0xe5 2nd_final_prj.o
  *(.gnu.linkonce.d*)
-                0x00800112                . = ALIGN (0x2)
- *fill*         0x00800111        0x1 
-                0x00800112                _edata = .
-                0x00800112                PROVIDE (__data_end, .)
+                0x008001ea                . = ALIGN (0x2)
+                0x008001ea                _edata = .
+                0x008001ea                PROVIDE (__data_end, .)
 
-.bss            0x00800112       0x12
-                0x00800112                PROVIDE (__bss_start, .)
+.bss            0x008001ea       0x12
+                0x008001ea                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.global_g  0x00800112        0x1 2nd_final_prj.o
-                0x00800112                global_g
+ .bss.global_g  0x008001ea        0x1 2nd_final_prj.o
+                0x008001ea                global_g
  .bss._avr_timer_cntcurr
-                0x00800113        0x4 2nd_final_prj.o
-                0x00800113                _avr_timer_cntcurr
+                0x008001eb        0x4 2nd_final_prj.o
+                0x008001eb                _avr_timer_cntcurr
  .bss.TimerFlag
-                0x00800117        0x1 2nd_final_prj.o
-                0x00800117                TimerFlag
+                0x008001ef        0x1 2nd_final_prj.o
+                0x008001ef                TimerFlag
  *(COMMON)
- COMMON         0x00800118        0xc 2nd_final_prj.o
-                0x00800118                Press_sec_level
-                0x00800119                SM3_State
-                0x0080011a                SM4_States
-                0x0080011b                x
-                0x0080011c                Press_fourth_level
-                0x0080011d                SM2_States
-                0x0080011e                SM1_State
-                0x0080011f                Press_third_level
-                0x00800120                SM5_States
-                0x00800121                Press_fifth_level
-                0x00800122                time
-                0x00800123                Press_States
-                0x00800124                PROVIDE (__bss_end, .)
-                0x00001c20                __data_load_start = LOADADDR (.data)
-                0x00001c32                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008001f0        0xc 2nd_final_prj.o
+                0x008001f0                Press_sec_level
+                0x008001f1                SM3_State
+                0x008001f2                SM4_States
+                0x008001f3                x
+                0x008001f4                Press_fourth_level
+                0x008001f5                SM2_States
+                0x008001f6                SM1_State
+                0x008001f7                Press_third_level
+                0x008001f8                SM5_States
+                0x008001f9                Press_fifth_level
+                0x008001fa                time
+                0x008001fb                Press_States
+                0x008001fc                PROVIDE (__bss_end, .)
+                0x00001e28                __data_load_start = LOADADDR (.data)
+                0x00001f12                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800124        0x0
-                0x00800124                PROVIDE (__noinit_start, .)
+.noinit         0x008001fc        0x0
+                0x008001fc                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800124                PROVIDE (__noinit_end, .)
-                0x00800124                _end = .
-                0x00800124                PROVIDE (__heap_start, .)
+                0x008001fc                PROVIDE (__noinit_end, .)
+                0x008001fc                _end = .
+                0x008001fc                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -582,17 +581,17 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x103e
+.debug_info     0x00000000     0x1275
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000     0x103e 2nd_final_prj.o
+ .debug_info    0x00000000     0x1275 2nd_final_prj.o
 
-.debug_abbrev   0x00000000      0x269
+.debug_abbrev   0x00000000      0x253
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x269 2nd_final_prj.o
+ .debug_abbrev  0x00000000      0x253 2nd_final_prj.o
 
-.debug_line     0x00000000     0x1bd1
+.debug_line     0x00000000     0x1d97
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000     0x1bd1 2nd_final_prj.o
+ .debug_line    0x00000000     0x1d97 2nd_final_prj.o
 
 .debug_frame    0x00000000      0x210
  *(.debug_frame)
@@ -603,9 +602,9 @@ END GROUP
  .debug_str     0x00000000      0x83a 2nd_final_prj.o
                                 0x895 (size before relaxing)
 
-.debug_loc      0x00000000      0x628
+.debug_loc      0x00000000      0x63f
  *(.debug_loc)
- .debug_loc     0x00000000      0x628 2nd_final_prj.o
+ .debug_loc     0x00000000      0x63f 2nd_final_prj.o
 
 .debug_macinfo
  *(.debug_macinfo)

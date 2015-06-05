@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 volatile unsigned char TimerFlag = 0;
@@ -86,7 +87,6 @@ void LCD_Cursor(unsigned char column) {
 }
 
 void delay_ms(int miliSec) //for 8 Mhz crystal
-
 {
 	int i,j;
 	for(i=0;i<miliSec;i++)
@@ -121,7 +121,7 @@ ISR(TIMER1_COMPA_vect)
 		_avr_timer_cntcurr = _avr_timer_M;
 	}
 }
-void TimerSet(unsigned long M) 
+void TimerSet(unsigned long M)
 {
 	_avr_timer_M = M;
 	_avr_timer_cntcurr = _avr_timer_M;
@@ -222,9 +222,8 @@ void TickFct_State_machine_1()
 {
 	switch(SM1_State) 
 	{
-		//LCD_ClearScreen();
-		//LCD_DisplayString(1, "Level One");
 		case SM1_off:
+		LCD_DisplayString(1,"Simon Press");
 		if(global_g == 0)
 		{
 			if(~PINB & 0x10)
@@ -254,12 +253,12 @@ void TickFct_State_machine_1()
 	switch(SM1_State) 
 	{
 		case SM1_off:
-		LCD_init();
-		LCD_DisplayString(1, "hello world");
 		PORTA = 0X00;
 		transmit_data(simon_SevenSeg(lives));
 		break;
 		case SM1_on1:
+		LCD_ClearScreen();
+		LCD_DisplayString(1, "Level One");
 		PORTA = 0x01;
 		break;
 		case SM1_on2:
@@ -285,6 +284,7 @@ void ButtonPress()
 		case Init:
 		if(global_g == 1)
 		{
+			LCD_DisplayString(1, "Begin Pressing");
 			if(~PINB & 0x01)
 			{
 				while(~PINB & 0x01){}
@@ -296,7 +296,7 @@ void ButtonPress()
 				{
 					lives--;
 				}
-				else
+				if(lives == 0)
 				{
 					global_g = 20;
 				}
@@ -317,7 +317,7 @@ void ButtonPress()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -336,7 +336,7 @@ void ButtonPress()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -355,7 +355,7 @@ void ButtonPress()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -400,6 +400,7 @@ void ButtonPress()
 		
 		case Press4:
 		PORTA = 0x08;
+		LCD_DisplayString(1,"Good Job");
 		transmit_data(simon_SevenSeg(lives));
 		break;
 		case Off:
@@ -416,11 +417,10 @@ void TickFct_Machine2()
 {
 	switch(SM2_States)
 	{
-		LCD_init();
-		LCD_DisplayString(1, "Level Two");
 		case SM2_off:
 		if(global_g == 2)
 		{
+			LCD_DisplayString(1, "Level Two");
 			if(~PINB & 0x01)
 			{
 				SM2_States = SM2_on1;
@@ -451,6 +451,7 @@ void TickFct_Machine2()
 		SM2_States = SM2_on6;
 		break;
 		case SM2_on6:
+		LCD_DisplayString(1, "Lets test your  memory out");
 		global_g = 3;
 		SM2_States = SM2_off;
 		break;
@@ -499,7 +500,7 @@ void ButtonPress2()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -518,7 +519,7 @@ void ButtonPress2()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -538,7 +539,7 @@ void ButtonPress2()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -558,7 +559,7 @@ void ButtonPress2()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -578,7 +579,7 @@ void ButtonPress2()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -598,7 +599,7 @@ void ButtonPress2()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -616,7 +617,7 @@ void ButtonPress2()
 		Press_sec_level = Init2;
 	}
 	switch(Press_sec_level)
-	{
+	{		
 		case Error2:
 		PORTA = 0x10;
 		transmit_data(simon_SevenSeg(lives));
@@ -649,6 +650,7 @@ void ButtonPress2()
 
 		case Press_state6:
 		PORTA = 0x01;
+		LCD_DisplayString(1, "Good Job");
 		transmit_data(simon_SevenSeg(lives));
 		break;
 
@@ -667,9 +669,8 @@ void TickFct_Machine3()
 {
 	switch(SM3_State)
 	{
-		LCD_init();
-		LCD_DisplayString(1, "Level Three");
 		case SM3_off:
+		LCD_DisplayString(1, "Level Three");
 		if(global_g == 4)
 		{
 			if(~PINB & 0x01)
@@ -741,6 +742,7 @@ void TickFct_Machine3()
 		break;
 		case SM3_on9:
 		PORTA = 0x08;
+		LCD_DisplayString(1, "Leggo");
 		global_g = 5;
 		break;
 	}
@@ -766,7 +768,7 @@ void ButtonPress3()
 				{
 					lives--;
 				}
-				else
+				if(lives == 0)
 				{
 					global_g = 20;
 				}
@@ -794,7 +796,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -813,7 +815,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -832,7 +834,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -851,7 +853,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -871,7 +873,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -890,7 +892,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -909,7 +911,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -928,7 +930,7 @@ void ButtonPress3()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -981,6 +983,7 @@ void ButtonPress3()
 		PORTA = 0x02;
 		break;
 		case Press3_state9:
+		LCD_DisplayString(1, "Success");
 		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x08;
 		break;
@@ -997,9 +1000,8 @@ void TickFct_Machine4()
 {
 	switch(SM4_States)
 	{
-		LCD_init();
-		LCD_DisplayString(1, "Level Four");
 		case SM4_off:
+		LCD_DisplayString(1, "Level Four");
 		if(global_g == 6)
 		{
 			if(~PINB & 0x01)
@@ -1089,6 +1091,7 @@ void TickFct_Machine4()
 		PORTA = 0x02;
 		break;
 		case SM4_on12:
+		LCD_DisplayString(1,"Good Job so far Almost done");
 		PORTA = 0x01;
 		global_g = 7;
 		break;
@@ -1115,7 +1118,7 @@ void ButtonPress4()
 				{
 					lives--;
 				}
-				else
+				if(lives == 0)
 				{
 					global_g = 20;
 				}
@@ -1135,7 +1138,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1154,7 +1157,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1173,7 +1176,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1192,7 +1195,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1211,7 +1214,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1230,7 +1233,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1249,7 +1252,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1268,7 +1271,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1287,7 +1290,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1306,7 +1309,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1326,7 +1329,7 @@ void ButtonPress4()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1397,6 +1400,7 @@ void ButtonPress4()
 		PORTA = 0x02;
 		break;
 		case Press4_state12:
+		LCD_DisplayString(1, "Awesomeness");
 		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
@@ -1413,9 +1417,8 @@ void TickFct_Machine5()
 {
 	switch(SM5_States)
 	{
-		LCD_init();
-		LCD_DisplayString(1, "Level Five");
 		case SM5_off:
+		LCD_DisplayString(1, "Level Five");
 		if(global_g == 8)
 		{
 			if(~PINB & 0x01)
@@ -1523,6 +1526,7 @@ void TickFct_Machine5()
 		PORTA = 0x08;
 		break;
 		case SM5_on15:
+		LCD_DisplayString(1, "One Last Time!!!!!!!!");
 		PORTA = 0x01;
 		global_g = 9;
 		break;
@@ -1549,7 +1553,7 @@ void ButtonPress5()
 				{
 					lives--;
 				}
-				else
+				if(lives == 0)
 				{
 					global_g = 20;
 				}
@@ -1569,7 +1573,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1588,7 +1592,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1607,7 +1611,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1626,7 +1630,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1645,7 +1649,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1665,7 +1669,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1684,7 +1688,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1703,7 +1707,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1722,7 +1726,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1741,7 +1745,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1760,7 +1764,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1779,7 +1783,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1798,7 +1802,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1817,7 +1821,7 @@ void ButtonPress5()
 			{
 				lives--;
 			}
-			else
+			if(lives == 0)
 			{
 				global_g = 20;
 			}
@@ -1901,6 +1905,7 @@ void ButtonPress5()
 		PORTA = 0x08;
 		break;
 		case Press5_state15:
+		LCD_DisplayString(1, "Fantastic Job ;)");
 		transmit_data(simon_SevenSeg(lives));
 		PORTA = 0x01;
 		break;
@@ -1918,10 +1923,9 @@ int main(void)
 	DDRD = 0xFF;	PORTD = 0x00;//seven segment output with shift register
 	DDRC = 0xFF;	PORTC = 0x00;//data lines for LCD display
 	
+	LCD_init();
 	if(global_g == 0)
 	{
-		//LCD_init();
-		//LCD_DisplayString(1, "Simon Press");
 		LCD_ClearScreen();
 		while(global_g == 0)
 		{
@@ -1957,7 +1961,7 @@ int main(void)
 		}
 		while(global_g == 4)
 		{
-			TimerSet(1000);
+			TimerSet(500);
 			TimerOn();
 			TickFct_Machine3();
 			while(!TimerFlag);
@@ -1965,6 +1969,7 @@ int main(void)
 		}
 		while(global_g == 5)
 		{
+
 			TimerSet(200);
 			TimerOn();
 			ButtonPress3();
@@ -1997,9 +2002,17 @@ int main(void)
 		}
 		while(global_g == 9)
 		{
-			TimerSet(200);
+			TimerSet(300);
 			TimerOn();
 			ButtonPress5();
+			while(!TimerFlag);
+			TimerFlag = 0;
+		}
+		while(global_g == 20)
+		{
+			TimerSet(1000);
+			TimerOn();
+			LCD_DisplayString(1, "You have failed :(");
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
