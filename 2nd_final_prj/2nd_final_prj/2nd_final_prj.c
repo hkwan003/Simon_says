@@ -127,12 +127,45 @@ void TimerSet(unsigned long M)
 	_avr_timer_cntcurr = _avr_timer_M;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//custom character time
+void Custom_Char() 
+{
+	const unsigned char pacman[8] = {0xe,0x1b,0x1e,0x1c,0x1e,0x1f,0xe};
+	const unsigned char dot1[8] = {0x0,0x0,0x0,0x0,0xc,0xc,0x0};
+	const unsigned char dot2[8] = {0x0,0x0,0x0,0x0,0xc,0xc,0x0};
+	const unsigned char dot3[8] = {0x0,0x0,0x0,0x0,0xc,0xc,0x0};
+	const unsigned char villian[8] = {	0xe,0xe,0x1f,0x15,0x1f,0x1f,0x15};
+	unsigned char i;
+	LCD_WriteCommand(0x40);
+	
+	for(i = 0; i < 8; ++i) 
+	{
+		LCD_WriteData(pacman[i]);
+	}
+	for(i = 0; i < 8; ++i) 
+	{
+		LCD_WriteData(dot1[i]);
+	}
+	for(i = 0; i < 8; ++i) 
+	{
+		LCD_WriteData(dot2[i]);
+	}
+	for(i = 0; i < 8; ++i) 
+	{
+		LCD_WriteData(dot3[i]);
+	}
+	for(i = 0; i < 8; ++i) 
+	{
+		LCD_WriteData(villian[i]);
+	}
+	LCD_WriteCommand(0x80);
+}
 ///////////////////////////////////////////////begin code/////////////////////////////////////////////////////////////////////////////
 void transmit_data(unsigned char data) 
 {
 	int i;
-	for (i = 0; i < 8 ; ++i) {
+	for (i = 0; i < 8 ; ++i) 
+	{
 		// Sets SRCLR to 1 allowing data to be set
 		// Also clears SRCLK in preparation of sending data
 		PORTD = (PORTD & 0xF0) | 0x08;
@@ -217,23 +250,38 @@ void Shift_Seven_Seg(unsigned short number)
 	PORTD = (PORTD & 0xF8) | 0x01;
 }
 //////////////////////////////////////////7 seg BCD////////////////////////////////////////////////////////////////////////////////////
-enum SM1_States { SM1_off, SM1_on1, SM1_on2, SM1_on3, SM1_on4} SM1_State;
+enum SM1_States { init10, SM1_off, SM1_on1, SM1_on2, SM1_on3, SM1_on4} SM1_State;
 void TickFct_State_machine_1() 
 {
 	switch(SM1_State) 
 	{
-		case SM1_off:
-		LCD_DisplayString(1,"Simon Press");
+		case init10:
 		if(global_g == 0)
 		{
-			if(~PINB & 0x10)
-			{
-				SM1_State = SM1_on1;
-			}
-			else
-			{
-				SM1_State = SM1_off;
-			}
+			LCD_ClearScreen();
+			LCD_DisplayString(1,"Simon Press");
+			Custom_Char();
+			LCD_Cursor(17);
+			LCD_WriteData(0);
+			LCD_Cursor(19);
+			LCD_WriteData(1);
+			LCD_Cursor(21);
+			LCD_WriteData(2);
+			LCD_Cursor(23);
+			LCD_WriteData(3);
+			LCD_Cursor(25);
+			LCD_WriteData(4);
+			transmit_data(simon_SevenSeg(lives));
+			SM1_State = SM1_off;
+		}
+		case SM1_off:
+		if(~PINB & 0x10)
+		{
+			SM1_State = SM1_on1;
+		}
+		else
+		{
+			SM1_State = SM1_off;
 		}
 		break;
 		case SM1_on1:
@@ -249,12 +297,10 @@ void TickFct_State_machine_1()
 		SM1_State = SM1_off;
 		global_g = 1;
 	}
-
 	switch(SM1_State) 
 	{
 		case SM1_off:
 		PORTA = 0X00;
-		transmit_data(simon_SevenSeg(lives));
 		break;
 		case SM1_on1:
 		LCD_ClearScreen();
@@ -273,9 +319,7 @@ void TickFct_State_machine_1()
 		default:
 		break;
 	}
-
 }
-
 enum Press_States {Init, Press1, Press2, Press3, Press4, Error, Off} Press_States;
 void ButtonPress()
 {
@@ -1914,8 +1958,6 @@ void ButtonPress5()
 		break;
 	}
 }
-
-
 int main(void)
 {
 	DDRA = 0xFF;	PORTA = 0x00;//LED outputs
@@ -1924,7 +1966,7 @@ int main(void)
 	DDRC = 0xFF;	PORTC = 0x00;//data lines for LCD display
 	
 	LCD_init();
-	if(global_g == 0)
+	if(global_g > -1)
 	{
 		LCD_ClearScreen();
 		while(global_g == 0)
@@ -2017,6 +2059,5 @@ int main(void)
 			TimerFlag = 0;
 		}
 	}
-	return 0;
-		
+	return 0;	
 }
