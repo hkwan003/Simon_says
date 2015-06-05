@@ -2050,13 +2050,9 @@ int main(void)
 			while(!TimerFlag);
 			TimerFlag = 0;
 		}
-		while(global_g == 20)
+		if(global_g == 20)
 		{
-			TimerSet(1000);
-			TimerOn();
-			LCD_DisplayString(1, "You have failed :(");
-			while(!TimerFlag);
-			TimerFlag = 0;
+			LCD_DisplayString(1, "You have failed MISERABLY  :(");
 		}
 	}
 	return 0;	
